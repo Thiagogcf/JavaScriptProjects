@@ -78,6 +78,22 @@ function setupControls(container) {
         });
     });
 }
+// ... (previous code remains the same)
+
+let noiseEnabled = false;
+
+document.getElementById('addNoise').addEventListener('click', () => {
+    noiseEnabled = !noiseEnabled;
+    document.getElementById('addSineWave').disabled = noiseEnabled;
+    updateWaves();
+});
+
+document.getElementById('submitResult').addEventListener('click', () => {
+    const resultantData = document.getElementById('resultantSinewave').outerHTML;
+    const url = `result.html`;
+    localStorage.setItem('resultantData', resultantData);
+    window.open(url, '_blank');
+});
 
 function updateWaves() {
     const dataPoints = new Array(800).fill(0);
@@ -86,12 +102,23 @@ function updateWaves() {
         const amplitude = parseFloat(container.querySelector('.amplitude').value);
         const frequency = parseFloat(container.querySelector('.frequency').value);
         const phase = parseFloat(container.querySelector('.phase').value);
-        const waveData = new Array(800).fill(0).map((_, x) => amplitude * Math.sin((x / 100 * frequency) + (phase * Math.PI / 180)));
+        const waveData = new Array(800).fill(0).map((_, x) =>
+            amplitude * Math.sin((x / 100 * frequency) + (phase * Math.PI / 180))
+        );
         drawSineWave(svg, waveData, 'blue');
         waveData.forEach((y, x) => dataPoints[x] += y);
     });
+
+    if (noiseEnabled) {
+        const noiseAmplitude = 50;
+        const noiseData = new Array(800).fill(0).map(() => (Math.random() - 0.5) * noiseAmplitude);
+        noiseData.forEach((y, x) => dataPoints[x] += y);
+    }
+
     drawSineWave(svgResultant, dataPoints, 'red');
 }
+
+// ... (remaining code remains the same)
 
 function drawSineWave(svg, dataPoints, color = 'blue') {
     const maxHeight = Math.max(...dataPoints.map(Math.abs)) * 1.1; // Scale to max amplitude + 10%

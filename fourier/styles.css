@@ -104,3 +104,9 @@ input[type="range"], input[type="number"] {
 }
 
 
+#resultContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
