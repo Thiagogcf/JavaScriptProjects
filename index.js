@@ -1,5 +1,5 @@
 function listProjects() {
-  const projects = ["Arrows.html", "particles.html"];
+  const projects = ["arrows/arrows.html", "particles/particles.html"];
 
   const projectList = document.getElementById("project-list");
 
