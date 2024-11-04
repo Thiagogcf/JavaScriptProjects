@@ -142,8 +142,3 @@ function drawSineWave(svg, dataPoints, color = 'blue') {
 
 // Initial setup
 addSineWave();  // Add the first sine wave by default
-
-
-
-
-
